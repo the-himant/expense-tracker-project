@@ -1,5 +1,12 @@
 from storage import load_data
-from manage import add
+from manage import add_expense,view_expenses
+
+RED = '\033[91m'
+GREEN = '\033[92m'
+YELLOW = '\033[93m'
+BLUE = '\033[94m'
+OYAN = '\033[32m'
+RESET = '\033[0m'
 
 def validating_input(placeholder,options_range):
     try:
@@ -9,7 +16,7 @@ def validating_input(placeholder,options_range):
             return user_choice
 
         else:
-            print("Please enter valid service code!")
+            print(f"{RED}Please enter valid service code!{RESET}")
 
     except Exception as e:
         print("Invalid Input.",e)
@@ -18,7 +25,8 @@ def validating_input(placeholder,options_range):
 if __name__ == "__main__":
     data = load_data()
 
-    print("""
+    while True:
+        print("""
     ===== EXPENSE TRACKER =====
 
     1. Add Expense
@@ -28,14 +36,13 @@ if __name__ == "__main__":
     5. Exit
     """
     )
-
-
-
-    while True:
         user_choice = validating_input("Enter the service code you want to access:- ",5)
         if user_choice == 1:
-            add()
+            add_expense()
+
+        elif user_choice == 2:
+            view_expenses()
 
         elif user_choice == 5:
-            print("Thanks for using our application.")
+            print(f"{GREEN}Thanks for using our application.{RESET}")
             break
