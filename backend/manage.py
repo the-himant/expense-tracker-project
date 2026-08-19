@@ -1,7 +1,8 @@
+import uuid
+import json
 from datetime import datetime
 from expense import Expense
 from storage import save_expense, load_data
-import uuid
 
 # ---------------------
 #   COLORS
@@ -13,6 +14,9 @@ YELLOW = '\033[93m'
 BLUE = '\033[94m'
 OYAN = '\033[32m'
 RESET = '\033[0m'
+
+FILE_PATH = r'..\data\expense.json'
+
 
 # ---------------------
 #   ADD Expense
@@ -31,7 +35,6 @@ def add_expense():
         time = datetime.now().strftime("%H:%M:%S")
         
         spend = Expense(id=id,amount=amount,category=category,description=desc,date=date,time=time)
-        print(spend)
         if save_expense(spend):
             print(f"{GREEN}Expense add successfully!{RESET}")
 
@@ -43,12 +46,43 @@ def add_expense():
 #   VIEW expense
 # ---------------------
 def view_expenses():
-    total = 0
     data = load_data()
     print(display_card(data))
 
+# ---------------------
+#   Search expense
+# ---------------------
+def search_expense(data):
+    try:
+        category = input("Enter the category you wanna search -> ")
+        display_data = []
+        for i,expense in enumerate(data):
+            if expense["category"].lower() == category.lower():
+                display_data.append(expense)
+        print(display_card(display_data))
+    except Exception as e:
+        print(f"{RED} ERROR OCCURED{RESET}")
 
 
+# ---------------------
+#   DELETE expense
+# ---------------------
+def delete_expense():
+    try:
+        data = load_data()
+        serial_no = int(input("Enter the Serial number of expense that you want to delete-> "))
+        if 0 < serial_no >= len(data): 
+            data.pop(serial_no - 1)
+            try:
+                with open(FILE_PATH,'w') as file:
+                    json.dump(data,file)
+                print(f"{GREEN}Expense Deleted successfully{RESET}")
+            except FileNotFoundError:
+                print(f'{RED}DATA not Found!{RESET}')
+        else:
+            print(f"{RED}Please Enter valid serial no{RESET}")
+    except ValueError:
+        print(f"{RED}Please Enter valid number{RESET}")
 
 # -------------------------
 #   Expense display card 
