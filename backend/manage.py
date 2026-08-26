@@ -84,6 +84,39 @@ def delete_expense():
     except ValueError:
         print(f"{RED}Please Enter valid number{RESET}")
 
+
+# ---------------------
+#   UPDATE expense
+# ---------------------
+def update_expense(data):
+    try:
+        expense_id = int(input("Enter the Expense Id(Serial No.) that you want to update: "))
+        print(len(data))
+        if 0 < expense_id < len(data):
+            expense = data[expense_id - 1]
+            field = input("Which field you want to update:(amount, category, description)")
+            updated_value = input("Enter the new value: ")
+            if field.lower() == "amount":
+                expense['amount'] = int(updated_value)
+            elif field.lower() == "category":
+                expense['category'] = (updated_value)
+            elif "desc" in field.lower():
+                expense['description'] = (updated_value)
+            else:
+                print("Please provide valid field!")
+
+            with open(FILE_PATH,"w") as file:
+                json.dump(data,file)
+
+            print(f"{Green} Expense ID no. {expense_id} updated Successfully!{RESET}")
+        
+        else:
+            print(f"{RED}Please Provide Valid id!{RESET}")
+    
+    except Exception as e:
+        print("ERROR OCCURED")
+
+
 # -------------------------
 #   Expense display card 
 # -------------------------

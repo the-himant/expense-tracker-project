@@ -1,6 +1,6 @@
 import time
 from storage import load_data
-from manage import add_expense,view_expenses,search_expense,delete_expense
+from manage import add_expense,view_expenses,search_expense,delete_expense,update_expense,display_card
 
 RED = '\033[91m'
 GREEN = '\033[92m'
@@ -34,7 +34,7 @@ line = """
 2. View Expenses
 3. Search Expense
 4. Delete Expense
-5. Total Expenses
+5. Update Expense
 6. Exit\n"""
         
 
@@ -59,6 +59,10 @@ if __name__ == "__main__":
 
         elif user_choice == 4:
             delete_expense()
+
+        elif user_choice == 5:
+            print(display_card(data))
+            update_expense(data)
 
         elif user_choice == 6:
             endline = f"{GREEN}Thanks for using our application.{RESET}"
