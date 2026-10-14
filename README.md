@@ -21,15 +21,13 @@ A simple command-line expense tracker built with Python that helps users manage 
 
 1. Clone the Repository
 
-git clone <your-repository-url>
-
 2. Navigate to the Project Directory
 
 cd Expense-Tracker_project
 
 3. Run the Application
 
-If your main Python file is named "main.py", run:
+run:
 
 python main.py
 
